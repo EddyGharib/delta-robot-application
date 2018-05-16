@@ -158,8 +158,8 @@ class Window(QtGui.QMainWindow):
 
         # delta Robot Params
         bar = self.menuBar()
-        delta_rob_menuBar = bar.addMenu("delta Params")
-        set_delta_robot_action = QtGui.QAction("Set parameters", self)
+        delta_rob_menuBar = bar.addMenu("Edit")
+        set_delta_robot_action = QtGui.QAction("Delta parameters", self)
         set_delta_robot_action.triggered.connect(self.set_delta_rob_params)
         delta_rob_menuBar.addAction(set_delta_robot_action)
 
@@ -214,24 +214,31 @@ class Window(QtGui.QMainWindow):
         a = a[(a.find('=')+1):]
         b = b[(b.find('=')+1):]
         c = c[(c.find('=')+1):]
-        self.x_edit.setText(a)
-        self.y_edit.setText(b)
-        self.z_edit.setText(c)
+        self.x_edit.setText(a[:a.find(".")+3])
+        self.y_edit.setText(b[:b.find(".")+3])
+        self.z_edit.setText(c[:c.find(".")+3])
         a = float(a)
         b = float(b)
         c = float(c)
         res = inv_kinematics(a, b, c)
         if(res == "position does not exist"):
             t1 = t2 = t3 = "Non existing pt"
+            self.t1_edit.setText(t1)
+            self.t2_edit.setText(t2)
+            self.t3_edit.setText(t3)
         else:
             t1 = res[0]
             t2 = res[1]
             t3 = res[2]
             draw_delta_robot(t1, t2, t3, self.delta_rob_ax)
             self.delta_rob_canvas.draw()
-        self.t1_edit.setText(str(t1))
-        self.t2_edit.setText(str(t2))
-        self.t3_edit.setText(str(t3))
+            t1 = str(t1)
+            t2 = str(t2)
+            t3 = str(t3)
+            self.t1_edit.setText(t1[:t1.find(".")+3])
+            self.t2_edit.setText(t2[:t2.find(".")+3])
+            self.t3_edit.setText(t3[:t3.find(".")+3])
+
 
         return
 

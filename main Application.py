@@ -172,7 +172,7 @@ class Window(QtGui.QMainWindow):
         ion()
         self.work_vol_ax.cla()
         self.delta_rob_ax.cla()
-        if (fwd_kinematics(30,30,30,self.drob_dimensions) != "position does not exist"):
+        if (fwd_kinematics(30,30,30,self.drob_dimensions) != False):
             draw_delta_robot(30, 30, 30, self.delta_rob_ax, self.drob_dimensions)
         self.delta_rob_canvas.draw()
         z_min = - r - l
@@ -221,7 +221,7 @@ class Window(QtGui.QMainWindow):
         b = float(b)
         c = float(c)
         res = inv_kinematics(a, b, c)
-        if(res == "position does not exist"):
+        if(res == False):
             t1 = t2 = t3 = "Non existing pt"
         else:
             t1 = res[0]

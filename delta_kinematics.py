@@ -24,7 +24,7 @@ c_default_drob_dimensions = {'R':0.40941, 'r':0.4, 'l':0.8, 'd':0.07845}
 def fwd_kinematics(theta1, theta2, theta3, drob_dimensions = default_drob_dimensions):
     """
     Takes the angles in degrees and gives the position if existing
-    else it returns "position does not exist"
+    else it returns False
     """
     # Robot dimensions
     d = drob_dimensions['d']
@@ -74,7 +74,7 @@ def fwd_kinematics(theta1, theta2, theta3, drob_dimensions = default_drob_dimens
     d = b * b - 4.0 * a * c;
 
     if (d < 0):
-        return "position does not exist"
+        return False
 
     z0 = -0.5 * (b + sqrt(d)) / a;
     x0 = (a1 * z0 + b1) / dnm
@@ -87,7 +87,7 @@ def s_inv_kinematics(x0, y0, z0, drob_dimensions = default_drob_dimensions):
     """
     Takes the position of the end effector as input and returns
     the corresponding angle in degree if existing
-    else it returns "position does not exist"
+    else it returns False
     """
 
     # Robot dimensions
@@ -109,7 +109,7 @@ def s_inv_kinematics(x0, y0, z0, drob_dimensions = default_drob_dimensions):
 
     d = -(a + b * y1) * (a + b * y1) + rf * (b * b * rf + rf)
     if (d < 0):
-        return "position does not exist"
+        return False
 
     yj = (y1 - a * b - sqrt(d)) / (b * b + 1)
     zj = a + b * yj
@@ -126,7 +126,7 @@ def inv_kinematics(x0, y0, z0, drob_dimensions = default_drob_dimensions):
     """
     Takes the position of the end effector as input and returns
     the 3 angles in degree if existing
-    else it returns "position does not exist"
+    else it returns False
     """
 
     # Robot dimensions
@@ -144,8 +144,8 @@ def inv_kinematics(x0, y0, z0, drob_dimensions = default_drob_dimensions):
     theta2 = s_inv_kinematics(x0 * cos120 + y0 * sin120, y0 * cos120 - x0 * sin120, z0, drob_dimensions)
     theta3 = s_inv_kinematics(x0 * cos120 - y0 * sin120, y0 * cos120 + x0 * sin120, z0, drob_dimensions)
     if (
-            theta1 == "position does not exist" or theta2 == "position does not exist" or theta3 == "position does not exist"):
-        return "position does not exist"
+            theta1 == False or theta2 == False or theta3 == False):
+        return False
     return [theta1, theta2, theta3]
 
 

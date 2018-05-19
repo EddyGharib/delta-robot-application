@@ -192,7 +192,7 @@ def is_mechanically_accessible(x, y, z, Gamma = False, Beta = False, drob_dimens
     rf = r
 
     res = inv_kinematics(x, y, z)
-    if res == "position does not exist":
+    if res == False:
         return False
     [theta1, theta2, theta3] = res
     theta1_rd = theta1*pi/180
@@ -417,7 +417,7 @@ def test_discontinuities(xmin=-1, xmax=1, ymin=-1, ymax=1, zmin=-1.3, zmax=0.02,
                 y = final_matrix[1, i, j, k]
                 z = final_matrix[2, i, j, k]
                 res = inv_kinematics(x, y, z)
-                if res == "position does not exist":
+                if res == False:
                     final_matrix[3, i, j, k] = 0
                 else:
                     final_matrix[3, i, j, k] = 1

@@ -59,7 +59,7 @@ def test_dummy_go():
     plt.subplot(2, 1, 1)
     plt.plot(t, t1_vect)
     plt.plot(t, t2_vect)
-    plt.plot(t, t3_vect)
+    plt.plot(t, t3_vect, ".")
     plt.title("Theta angle variations")
     plt.legend(["T1", "T2", "T3"])
     plt.ylabel("theta(degree)")

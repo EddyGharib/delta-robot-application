@@ -269,7 +269,7 @@ def is_mechanically_accessible(x, y, z, Gamma = False, Beta = False, drob_dimens
         beta3_rd = acos(np.dot(B3A3_240,B3Cpr3_240)/(np.linalg.norm(B3Cpr3_240)*np.linalg.norm(B3A3_240)))
         beta3 = beta3_rd*180/pi
 
-        beta_max = 45
+        beta_max = 30 #45
 
         is_accessible_beta = not (beta1<beta_max or beta2<beta_max or beta3<beta_max)
 

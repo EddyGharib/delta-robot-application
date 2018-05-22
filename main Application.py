@@ -38,6 +38,8 @@ class Window(QtGui.QMainWindow):
         self.showMaximized()
         self.setWindowTitle("Delta Robot application")
 
+        self.final_workspace_points = [[-0.4,-0.4,-0.5], [0.4,-0.4,-0.5], [0.4,0.4,-0.5], [-0.4,0.4,-0.5],
+                                       [-0.4,-0.4,-0.79], [0.4,-0.4,-0.79], [0.4,0.4,-0.79], [-0.4,0.4,-0.79]]
         # Update delta robot params
         self.drob_dimensions = default_drob_dimensions
 
@@ -57,29 +59,34 @@ class Window(QtGui.QMainWindow):
         self.delta_rob_canvas.draw()
 
         # Generating gamma and beta checkboxes layout
-        self.bound_checkbox = QtGui.QCheckBox('work volume')
+        self.bound_checkbox = QtGui.QCheckBox('Initial')
         self.bound_checkbox.setCheckState(True)
         self.bound_checkbox.setTristate(False)
         self.bound_checkbox.stateChanged.connect(self.updateWorkVolume)
         self.bound_points_generated = True
 
-        self.gamma_checkbox = QtGui.QCheckBox('Gamma limitation')
+        self.gamma_checkbox = QtGui.QCheckBox('Gamma')
         self.gamma_checkbox.stateChanged.connect(self.updateWorkVolume)
         self.gamma_points_generated = False
 
-        self.beta_checkbox = QtGui.QCheckBox('Beta limitation')
+        self.beta_checkbox = QtGui.QCheckBox('Beta')
         self.beta_checkbox.stateChanged.connect(self.updateWorkVolume)
         self.beta_points_generated = False
 
-        self.gamma_beta_checkbox = QtGui.QCheckBox('Gamma and Beta limitation')
+        self.gamma_beta_checkbox = QtGui.QCheckBox('Gamma + Beta')
         self.gamma_beta_checkbox.stateChanged.connect(self.updateWorkVolume)
         self.gamma_beta_points_generated = False
+
+        self.final_checkbox = QtGui.QCheckBox('Final')
+        self.final_checkbox.stateChanged.connect(self.updateWorkVolume)
+        self.final_checkbox_points_generated = False
 
         gammabetaLayout = QtGui.QHBoxLayout()
         gammabetaLayout.addWidget(self.bound_checkbox)
         gammabetaLayout.addWidget(self.gamma_checkbox)
         gammabetaLayout.addWidget(self.beta_checkbox)
         gammabetaLayout.addWidget(self.gamma_beta_checkbox)
+        gammabetaLayout.addWidget(self.final_checkbox)
         self.updateWorkVolume()
 
         # Generating the left layout
@@ -199,6 +206,8 @@ class Window(QtGui.QMainWindow):
                 [self.x_gamma_beta_bound, self.y_gamma_beta_bound, self.z_gamma_beta_bound] = get_work_volume_points(boundary = True, Gamma = True, Beta = True, xmin=-x_max, xmax=x_max, ymin=y_min, ymax=-y_min, zmin = z_min, zmax=z_max, drob_dimensions=self.drob_dimensions)
                 self.gamma_beta_points_generated = True
             self.work_vol_ax.plot3D(self.x_gamma_beta_bound, self.y_gamma_beta_bound, self.z_gamma_beta_bound, ".g")
+        if self.final_checkbox.isChecked():
+            ax_plot_cube(self.work_vol_ax, self.final_workspace_points, 'k')
         self.work_vol_canvas.draw()
 
     def updateCoords(self,event):

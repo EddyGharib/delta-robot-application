@@ -36,6 +36,8 @@ Rq: to visually understand the 3 matrix, y is given before x
 def get_horiz_cut(z=-0.9, Gamma=False, Beta=False, xmin=-1, xmax=1, ymin=-1, ymax=1, h_pointnum=50, drob_dimensions = default_drob_dimensions):
     """
     :param z: Height of the horizontal plane where the cut would be made
+    :param Gamma: Determines whether the Gamma angle limitation should be taken into consideration or not
+    :param Beta: Determines whether the Beta angle limitation should be taken into consideration or not
     :param xmin: minimum x of the horizontal cut
     :param xmax: maximum x of the horizontal cut
     :param ymin: minimum y of the horizontal cut
@@ -110,6 +112,9 @@ def horiz_cut_to_vect(horiz_cut):
 """Work volume"""
 def get_work_volume_points(boundary=True, Gamma=False, Beta=False, xmin=-1, xmax=1, ymin=-1, ymax=1, zmin=-1.3, zmax=-0.02, h_pointnum=50, cutsnum = 40, drob_dimensions = default_drob_dimensions):
     """
+    :param Boundary: Determines whether the only the boundary points are returned or all the points in the volume
+    :param Gamma: Determines whether the Gamma angle limitation should be taken into consideration or not
+    :param Beta: Determines whether the Beta angle limitation should be taken into consideration or not
     :param xmin: Start x position of the cubic volume to be tested
     :param xmax: End x position of the cubic volume to be tested
     :param ymin: Start y position of the cubic volume to be tested
@@ -118,7 +123,13 @@ def get_work_volume_points(boundary=True, Gamma=False, Beta=False, xmin=-1, xmax
     :param zmax: End z position of the cubic volume to be tested
     :param h_pointnum: Nmber of points to be tested between xmin and max (same is used for ymin --> ymax)
     :param cutsnum: Number of hotizontal cuts to be made between zmin and zmax
-    :return: vectors holding the coordinates of the points inside the work volume
+    :param drob_dimensions: dictionnary containing the delta robot dimensions
+    :return: vectors holding the coordinates of the points inside the work volume according to the values of boundary gamma
+    and beta:
+    if gamma == True: the points non accessible due to gamma limitation are excluded from the returned volume
+    if beta == True: the points non accessible due to betaa limitation are excluded from the returned volume
+    if boundary == True: the points inside the workspace are excluded from the returned volume
+
     """
 
     # Robot dimensions
@@ -148,6 +159,10 @@ def get_work_volume_points(boundary=True, Gamma=False, Beta=False, xmin=-1, xmax
     return [x_comp, y_comp, z_comp]
 
 def get_z_max(drob_dimensions = default_drob_dimensions):
+    """
+    :param drob_dimensions: dictionnary containing the delta robot dimensions
+    :return: approximate maximum z in the workspace of the robot
+    """
     # Robot dimensions
     d = drob_dimensions['d']
     R = drob_dimensions['R']
@@ -177,7 +192,10 @@ def is_mechanically_accessible(x, y, z, Gamma = False, Beta = False, drob_dimens
     :param x: X axis position of the point to be tested
     :param y: Y axis position of the point to be tested
     :param z: Z axis position of the point to be tested
-    :return: True if the position is mechanically accessible, false if not
+    :param Gamma: Determines whether the Gamma angle limitation should be taken into consideration or not
+    :param Beta: Determines whether the Beta angle limitation should be taken into consideration or not
+    :param drob_dimensions: dictionnary containing the delta robot dimensions
+    :return: True if the position is mechanically accessible, false if not, gamma and beta params determine whether each mechanical limitation should be taken into consideration or not
     """
 
     # Robot dimensions
@@ -295,7 +313,8 @@ def test_boundaries_calculation(z=-0.9, xmin=-1, xmax=1, ymin=-1, ymax=1, h_poin
     :param pointnum: number of points to be considered between xmin and xmax (or ymin and ymax)
     :return: 2 plots to compare the result with the input
     """
-    test = get_horiz_cut(z, xmin, xmax, ymin, ymax, h_pointnum)
+    test = get_horiz_cut(z=z, xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, h_pointnum = h_pointnum)
+    print(test)
     test1 = get_horiz_cut_boundaries(test)
     fig = figure()
     plot_horiz_cut(test)
@@ -360,6 +379,8 @@ def plot_convex_hull(xmin=-1, xmax=1, ymin=-1, ymax=1, zmin=-1.3, zmax=-0.02, h_
 def plot_mecanical_limitation(z=-0.9, Gamma=False, Beta=False):
     """
     :param z: Z axis position of the horizontal cut to be made
+    :param Gamma: Determine whether gamma mechanical limitation should be considered or not
+    :param Beta: Determine whether beta mechanical limitation should be considered or not
     :return: Plots 2 figures to compare the mathematically accessible region with the mechanically accessible one
     and see the effect of the spring.
     """
@@ -372,6 +393,11 @@ def plot_mecanical_limitation(z=-0.9, Gamma=False, Beta=False):
     show()
 
 def plot_mechanical_and_mathematical_volume(Gamma=False, Beta=False):
+    """
+    :param Gamma: Determine whether gamma mechanical limitation should be considered or not
+    :param Beta: Determine whether beta mechanical limitation should be considered or not
+    :return: Plot both mechanical and mathematical volumes on a figure (used for comparison)
+    """
     fig = figure()
     ax = Axes3D(fig)
     ion()
@@ -445,10 +471,10 @@ def disc_num(start, end):
 
 # plot_convex_hull()
 
-# test_boundaries_calculation(-0.4)
+test_boundaries_calculation(-0.38)
 
 # disc_num(1,50)
 
-# plot_mecanical_limitation(z=-0.5, Gamma=False, Beta=True)
+# plot_mecanical_limitation(z=-0.3, Gamma=False, Beta=False)
 
 # plot_mechanical_and_mathematical_volume(Beta=True)

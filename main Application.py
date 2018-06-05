@@ -78,6 +78,8 @@ class Window(QtGui.QMainWindow):
         self.gamma_beta_points_generated = False
 
         self.final_checkbox = QtGui.QCheckBox('Final')
+        self.final_checkbox.setCheckState(True)
+        self.final_checkbox.setTristate(False)
         self.final_checkbox.stateChanged.connect(self.updateWorkVolume)
         self.final_checkbox_points_generated = False
 
@@ -179,6 +181,9 @@ class Window(QtGui.QMainWindow):
         ion()
         self.work_vol_ax.cla()
         self.delta_rob_ax.cla()
+        self.work_vol_ax.set_xlabel("X(m)")
+        self.work_vol_ax.set_ylabel("Y(m)")
+        self.work_vol_ax.set_zlabel("Z(m)")
         if (fwd_kinematics(30,30,30,self.drob_dimensions) != False):
             draw_delta_robot(30, 30, 30, self.delta_rob_ax, self.drob_dimensions)
         self.delta_rob_canvas.draw()

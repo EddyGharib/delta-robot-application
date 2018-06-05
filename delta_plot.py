@@ -22,6 +22,7 @@ def draw_delta_robot(theta1, theta2, theta3, ax, drob_dimensions = default_drob_
     :param theta2: Second characteristic angle of the robot in degrees
     :param theta3: Third characteristic angle of the robot in degrees
     :param ax: The axis on which the robot should be plotted
+    :param drob_dimensions: dictionary containing the delta robot dimensions
     :return: draws the robot in the corresponding configuration on the given axis
     """
 

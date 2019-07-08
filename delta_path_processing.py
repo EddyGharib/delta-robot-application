@@ -106,4 +106,7 @@ def test_dummy_go():
     plt.legend("Z position")
     plt.title("Z axis position")
     plt.show()
-test_dummy_go()
+
+if __name__ == "__main__":
+    # test_dummy_go()
+    pass

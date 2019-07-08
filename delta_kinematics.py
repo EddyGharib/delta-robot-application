@@ -155,7 +155,7 @@ def mesure_inv_kin_speed():
     print("--- %s seconds ---" % (time.clock() - start_time))
 
 
-# mesure_inv_kin_speed()
-
-
-# print(inv_kinematics(0.5, 0.5, -0.8))
+if __name__ == "__main__":
+    # mesure_inv_kin_speed()
+    # print(inv_kinematics(0.5, 0.5, -0.8))
+    pass

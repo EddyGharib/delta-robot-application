@@ -1,13 +1,3 @@
-"""
-This software was developed under python 3.4.1
-It depends on the following packages:
-    - numpy
-    - matplotlib
-    - scipy
-    - PyQt4
-please make sure these packages are installed before you lunch this app
-"""
-
 from PyQt4 import QtGui,QtCore
 
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
@@ -15,7 +5,6 @@ from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT as Navigatio
 
 from delta_work_volume import *
 from delta_plot import *
-
 
 class Window(QtGui.QMainWindow):
     def __init__(self, parent=None):

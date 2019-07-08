@@ -465,16 +465,17 @@ def disc_num(start, end):
 
 
 
+if __name__ == '__main__':
+    """Tests"""
+    # animate_work_vol(pausetime=0.1, cutsnum=40)
 
-"""Tests"""
-# animate_work_vol(pausetime=0.1, cutsnum=40)
+    # plot_convex_hull()
 
-# plot_convex_hull()
+    # test_boundaries_calculation(-0.38)
 
-test_boundaries_calculation(-0.38)
+    # disc_num(1,50)
 
-# disc_num(1,50)
+    # plot_mecanical_limitation(z=-0.3, Gamma=False, Beta=False)
 
-# plot_mecanical_limitation(z=-0.3, Gamma=False, Beta=False)
-
-# plot_mechanical_and_mathematical_volume(Beta=True)
+    # plot_mechanical_and_mathematical_volume(Beta=True)
+    pass

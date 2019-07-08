@@ -68,14 +68,15 @@ def split_complex_array(arr):
     return arr.real,arr.imag
 
 
+if __name__ == '__main__':
+    """testing get_close_pts"""
+    # pt1,pt2 = get_close_pts(0, 1+1j, -0.7, 0.01)
+    # # print(pt1, pt2)
 
-"""testing get_close_pts"""
-# pt1,pt2 = get_close_pts(0, 1+1j, -0.7, 0.01)
-# # print(pt1, pt2)
 
-
-"""Testing get_bound_pts"""
-# pts = get_bound_pts(0, 1, -0.3, 0.01)
-# # x, y = split_complex_array(pts)
-# # plot(x, y, 'r.')
-# # show()
+    """Testing get_bound_pts"""
+    # pts = get_bound_pts(0, 1, -0.3, 0.01)
+    # # x, y = split_complex_array(pts)
+    # # plot(x, y, 'r.')
+    # # show()
+    pass
